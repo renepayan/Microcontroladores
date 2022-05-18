@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <executable name="dist/default/production/Practica05.X.production.">
+    <memory name="data">
+      <units>bytes</units>
+      <length>2048</length>
+      <used>258</used>
+      <free>1790</free>
+    </memory>
+    <memory name="program">
+      <units>bytes</units>
+      <length>48768</length>
+      <used>4911</used>
+      <free>43857</free>
+    </memory>
+  </executable>
+</project>
