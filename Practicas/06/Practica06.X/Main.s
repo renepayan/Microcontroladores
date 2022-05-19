@@ -14,27 +14,7 @@
      */ 
     .global funcion_Principal    
     .text
-	La:
-	    BCLR    T1CON,	#TON	
-	    CLR	    TMR1		    ; Clear contents of the timer register
-	    MOV	    #2094,	w0	    ; Load the Period register
-	    MOV	    w0,		PR1	   
-	    BSET    T1CON,	#TON	
-	    RETURN
-	Mi:
-	    BCLR    T1CON,	#TON	
-	    CLR	    TMR1		    ; Clear contents of the timer register
-	    MOV	    #3144,	w0	    ; Load the Period register
-	    MOV	    w0,		PR1	   
-	    BSET    T1CON,	#TON
-	    RETURN
-	Re:
-	    BCLR    T1CON,	#TON	
-	    CLR	    TMR1		    ; Clear contents of the timer register
-	    MOV	    #2800,	w0	    ; Load the Period register
-	    MOV	    w0,		PR1	    ; with the value 14394
-	    BSET    T1CON,	#TON
-	    RETURN
+	
 	    
 	/*
 	 * funcion_Principal:
@@ -42,19 +22,13 @@
 	 *	    mientras el microcontrolador este prendido
 	 */	
 	    
-	funcion_Principal:	    
-	    PUSH W6
-	    MOV PORTD, W6
-	    CP W6, W7
-	    BRA Z, funcion_Principal
-	    MOV W6, W7
-	    CP0 W6
-	    BRA Z,La
-	    CP W6, #1 ;Caso [01]
-	    BRA Z, Mi
-	    CP W6, #2 ;Caso [10]
-	    BRA Z, Re
-	    bra funcion_Principal
+	funcion_Principal:
+	    MOV W4, U1TXREG	    
+	    MOV #1000, W0
+	    CALL delay_ms	    
+	    INC W4, W4   	    
+	    GOTO funcion_Principal	    	    
+	    RETURN
     .LIST
 .endif
     

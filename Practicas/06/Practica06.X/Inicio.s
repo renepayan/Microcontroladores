@@ -108,10 +108,10 @@
 	    MOV	#0x8000,    W0	; Enable UART for 8-bit data,
 				    ; no parity, 1 STOP bit,
 				    ; no wakeup
-
-	    MOV	 W0,	U1MODE
+	    BCLR	 IFS0,	#U1RXIF
+	    MOV		 W0,	 U1MODE
 	    BSET	 U1STA,	#UTXEN ; Enable transmit
-	    BSET	 IEC0,	#U1RXIE ; Enable receive interrupts
+	    BSET	 IEC0,	#U1RXIE ; Enable receive interrupts	    
 	    RETURN
 	
 	CONF_T1:
@@ -121,7 +121,7 @@
 	    BCLR    T1CON,	#TCKPS1	    	    
 
 	    CLR	    TMR1		    ; Clear contents of the timer register
-	    MOV	    #4188,	w0	    ; Load the Period register
+	    MOV	    #3529,	w0	    ; Load the Period register
 	    MOV	    w0,		PR1	    ; with the value 14394
 
 	    BCLR    IPC0,	#T1IP0	    ; Setup Timer1 interrupt for
@@ -143,12 +143,14 @@
 	    MOV #__SP_init, W15       ;Initalize the Stack Pointer
 	    MOV #__SPLIM_init, W0     ;Initialize the Stack Pointer Limit Register
 	    MOV W0, SPLIM
-	    NOP                       ;Add NOP to follow SPLIM initialization
+	    NOP                       ;Add NOP to follow SPLIM initialization	    
 	    CALL _wreg_init           ;Call _wreg_init subroutine, Optionally use RCALL instead of CALL	
 	    CALL CONF_PERIPHERALS
-	    ;CALL CONF_UART1	
-	    CALL CONF_T1
-	    MOV #10, W7	    
-	    BRA funcion_Principal
+	    CALL CONF_UART1		    	    	    
+	    CALL CONF_T1	    
+	    MOV #10, W7	
+	    ciclo_eterno:
+		CALL funcion_Principal
+		GOTO ciclo_eterno
     .LIST
 .endif

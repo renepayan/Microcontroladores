@@ -1,1 +1,1 @@
-build/default/production/Util.o: Util.s
+build/default/production/Util.o: ./p30F4013.inc Util.s
